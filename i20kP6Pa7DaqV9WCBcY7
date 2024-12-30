@@ -1,0 +1,768 @@
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+local Window = Fluent:CreateWindow({
+    Title = "💫 Flower Hub 0.4.8",
+    SubTitle = "by @f.l_x9wer",
+    TabWidth = 160, 
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
+    Theme = "Normal Theme",
+    MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
+})
+
+--Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
+local Tabs = {
+    Main = Window:AddTab({ Title = "Main", Icon = "globe" }),
+    Player = Window:AddTab({ Title = "Player", Icon = "user" }),
+    Gunkit = Window:AddTab({ Title = "Gunkit", Icon = "swords" }),
+    Others = Window:AddTab({ Title = "Others", Icon = "zoom-in" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+
+local Options = Fluent.Options
+
+    Fluent:Notify({
+        Title = "Notification",
+        Content = "사용해주셔서 감사합니다!",
+        Duration = 5 -- Set to nil to make the notification not disappear
+    })
+
+-----------------Main--------------------------
+local CEset = false
+local Events = {}
+local Player = game.Players.LocalPlayer
+
+local Section = Tabs.Main:AddSection("Scripts")
+
+Tabs.Main:AddButton({
+    Title = "Dex",
+    Description = "Dex를 실행합니다.",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Flower-Devloper/robloxscript/refs/heads/main/Protected_7173160198086914.txt"))()
+        Fluent:Notify({
+			Title = "Notification",
+			Content = "성공적으로 실행되었습니다.",
+			Duration = 5
+		})
+    end
+})
+
+Tabs.Main:AddButton({
+    Title = "Infinite Yield",
+    Description = "Infinite Yield를 실행합니다.",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+        Fluent:Notify({
+			Title = "Notification",
+			Content = "성공적으로 실행되었습니다.",
+			Duration = 5
+		})
+    end
+})
+
+Tabs.Main:AddButton({
+    Title = "OwlHub",
+    Description = "OwlHub를 실행합니다.",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/CriShoux/OwlHub/master/OwlHub.txt"))();
+        Fluent:Notify({
+			Title = "Notification",
+			Content = "성공적으로 실행되었습니다.",
+			Duration = 5
+		})
+    end
+})
+
+local Section = Tabs.Main:AddSection("Game")
+
+Tabs.Main:AddButton({
+    Title = "Rejoin",
+    Description = "게임을 재접합니다.",
+    Callback = function()
+    local player = game:GetService("Players").LocalPlayer
+    local placeId = game.PlaceId
+    local jobId = game.JobId
+    game:GetService("TeleportService"):TeleportToPlaceInstance(placeId, jobId, player)
+        Fluent:Notify({
+			Title = "Notification",
+			Content = "성공적으로 실행되었습니다.",
+			Duration = 5
+		})
+    end
+})
+
+Tabs.Main:AddButton({
+    Title = "Self Kick",
+    Description = "스스로를 게임에서 추방합니다.",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/FLOWERDEVELOPERR3/Script/refs/heads/main/Protected_7715213063064574.txt"))()
+        Fluent:Notify({
+			Title = "Notification",
+			Content = "성공적으로 실행되었습니다.",
+			Duration = 5
+		})
+    end
+})
+-----------------------------------Player---------------------
+
+local Slider = Tabs.Player:AddSlider("Slider", {
+    Title = "WalkSpeed",
+    Description = "WalkSpeed를 설정합니다.",
+    Default = 2,
+    Min = 5,
+    Max = 300,
+    Rounding = 1,
+    Callback = function(Value)
+        print("Slider was changed:", Value)
+    end
+})
+
+Slider:OnChanged(function(Value)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value;
+end)
+
+Slider:SetValue(16)
+
+local Slider = Tabs.Player:AddSlider("Slider", {
+    Title = "JumpPower",
+    Description = "JumpPower를 설정합니다.",
+    Default = 2,
+    Min = 5,
+    Max = 300,
+    Rounding = 1,
+    Callback = function(Value)
+        print("Slider was changed:", Value)
+    end
+})
+
+Slider:OnChanged(function(Value)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value;
+    game.Players.LocalPlayer.Character.Humanoid.UseJumpPower = true;
+end)
+
+Slider:SetValue(45)
+
+Tabs.Player:AddButton({
+    Title = "클릭 TP",
+    Description = "클릭하여 TP하는 툴을 생성합니다.",
+    Callback = function()
+mouse = game.Players.LocalPlayer:GetMouse()
+tool = Instance.new("Tool")
+tool.RequiresHandle = false
+tool.Name = "TP TOOL"
+tool.Activated:connect(function()
+local pos = mouse.Hit+Vector3.new(0,2.5,0)
+pos = CFrame.new(pos.X,pos.Y,pos.Z)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+end)
+tool.Parent = game.Players.LocalPlayer.Backpack
+Fluent:Notify({
+    Title = "Notification",
+    Content = "성공적으로 실행되었습니다!",
+    Duration = 5
+})
+    end
+})
+
+Tabs.Player:AddButton({
+    Title = "fling All",
+    Description = "모든사람을 날립니다.",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/zqyDSUWX"))()
+        Fluent:Notify({
+            Title = "Notification",
+            Content = "성공적으로 실행되었습니다!",
+            Duration = 5 -- Set to nil to make the notification not disappear
+        })
+    end
+})
+
+local Toggle = Tabs.Player:AddToggle("NoClipToggle", {
+    Title = "NoClip",
+    Default = false
+})
+
+local noclipEnabled = false
+
+Toggle:OnChanged(function(state)
+    noclipEnabled = state
+end)
+
+game:GetService("RunService").Stepped:Connect(function()
+    if noclipEnabled then
+        local character = game:GetService("Players").LocalPlayer.Character
+        if character then
+            for _, part in pairs(character:GetDescendants()) do
+                if part:IsA("BasePart") and part.CanCollide then
+                    part.CanCollide = false
+                end
+            end
+        end
+    end
+end)
+
+local Toggle = Tabs.Player:AddToggle("FlyToggle", {Title = "Fly Mode", Default = false}) 
+local flying, Flyspeed, bodyVelocity, bodyGyro = false, 50, nil, nil
+
+Toggle:OnChanged(function(state)
+    flying = state
+    local hrp = game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if flying and hrp then
+        bodyVelocity = Instance.new("BodyVelocity", hrp) bodyVelocity.MaxForce = Vector3.new(1e5, 1e5, 1e5) bodyVelocity.Velocity = Vector3.zero
+        bodyGyro = Instance.new("BodyGyro", hrp) bodyGyro.MaxTorque = Vector3.new(1e5, 1e5, 1e5) bodyGyro.CFrame = hrp.CFrame
+    else
+        if bodyVelocity then bodyVelocity:Destroy() end if bodyGyro then bodyGyro:Destroy() end
+    end
+end)
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    if flying and bodyVelocity then
+        local uis = game:GetService("UserInputService")
+        local hrp = game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+        local direction = Vector3.zero
+        if uis:IsKeyDown(Enum.KeyCode.W) then direction = direction + workspace.CurrentCamera.CFrame.LookVector end
+        if uis:IsKeyDown(Enum.KeyCode.S) then direction = direction - workspace.CurrentCamera.CFrame.LookVector end
+        if uis:IsKeyDown(Enum.KeyCode.A) then direction = direction - workspace.CurrentCamera.CFrame.RightVector end
+        if uis:IsKeyDown(Enum.KeyCode.D) then direction = direction + workspace.CurrentCamera.CFrame.RightVector end
+        if uis:IsKeyDown(Enum.KeyCode.Space) then direction = direction + Vector3.new(0, 1, 0) end
+        if uis:IsKeyDown(Enum.KeyCode.LeftShift) then direction = direction - Vector3.new(0, 1, 0) end
+        if hrp and direction.Magnitude > 0 then bodyVelocity.Velocity = direction.Unit * Flyspeed else bodyVelocity.Velocity = Vector3.zero end
+    end
+end)
+
+local Input = Tabs.Player:AddInput("Input", {
+    Title = "Fly 속도",
+    Default = "여기에다가 입력",
+    Placeholder = "Placeholder",
+    Numeric = true, -- Only allows numbers
+    Finished = true, -- Only calls callback when you press enter
+    Callback = function(Value)
+        Flyspeed = Value
+    end
+})
+
+Input:OnChanged(function()
+    print("Input updated:", Input.Value)
+end)
+
+local Toggle = Tabs.Player:AddToggle("InfiniteJumpToggle", {Title = "Infinite Jump", Default = false})
+local InfiniteJumpEnabled = false
+local jumpConnection
+
+Toggle:OnChanged(function(state)
+    InfiniteJumpEnabled = state
+    if InfiniteJumpEnabled then
+        if not jumpConnection then
+            jumpConnection = game:GetService("UserInputService").JumpRequest:Connect(function()
+                local humanoid = game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+                if humanoid then humanoid:ChangeState("Jumping") end
+            end)
+        end
+    else
+        if jumpConnection then
+            jumpConnection:Disconnect()
+            jumpConnection = nil
+        end
+    end
+end)
+
+Options.InfiniteJumpToggle:SetValue(false)
+-----------------------------------Gunkit------------------------
+local Section = Tabs.Gunkit:AddSection("ACS 2.0.1")
+
+Tabs.Gunkit:AddButton({
+    Title = "2.0.1 Server Nuke",
+    Description = "서버를 터트립니다.",
+    Callback = function()
+        while task.wait() do
+            for _, player in next, game.Players:GetPlayers() do
+               game:GetService("ReplicatedStorage")["ACS_Engine"].Events.Suppression:FireServer(player, 666, 666, 666)
+            end
+          end
+          Fluent:Notify({
+            Title = "Notification",
+            Content = "성공적으로 실행되었습니다!",
+            Duration = 5 -- Set to nil to make the notification not disappear
+        })
+    end
+})
+
+Tabs.Gunkit:AddButton({
+    Title = "2.0.1 Kill All",
+    Description = "모든사람을 죽입니다.",
+    Callback = function()
+        local Services = {
+            ReplicatedStorage = game:GetService("ReplicatedStorage");
+            Players = game:GetService("Players");
+            }
+            local Player = Services.Players.LocalPlayer
+            local ACSMain = Services.ReplicatedStorage.ACS_Engine
+            local Events = ACSMain.Events
+            
+            local ID = Events.AcessId:InvokeServer(Player.UserId)
+            local RealID = ID.."-"..Player.UserId
+            
+            local FoundAndDone = false
+            
+            local ModTable = {
+            
+            camRecoilMod = {
+            RecoilTilt = 1,
+            RecoilUp = 1,
+            RecoilLeft = 1,
+            RecoilRight = 1
+            }
+            
+            ,gunRecoilMod= {
+            RecoilUp = 1,
+            RecoilTilt = 1,
+            RecoilLeft = 1,
+            RecoilRight = 1
+            }
+            
+            ,ZoomValue = 70
+            ,Zoom2Value = 70
+            ,AimRM = 1
+            ,SpreadRM = 1
+            ,DamageMod = 1
+            ,minDamageMod = 1
+            
+            ,MinRecoilPower = 1
+            ,MaxRecoilPower = 1
+            ,RecoilPowerStepAmount = 1
+            
+            ,MinSpread = 1
+            ,MaxSpread = 1
+            ,AimInaccuracyStepAmount = 1
+            ,AimInaccuracyDecrease = 1
+            ,WalkMult = 1
+            ,adsTime = 1
+            ,MuzzleVelocity = 1
+            }  
+            
+            for k, a in pairs(workspace:GetDescendants()) do
+            if a:IsA("Humanoid") then
+            if Services.Players:GetPlayerFromCharacter(a.Parent) then
+                print(a.Parent)
+            for i, v in pairs(Services.Players:GetDescendants()) do
+            if v:IsA("Tool") then
+            if v:FindFirstChild("ACS_Settings") then
+            local Tool = v
+            FoundAndDone = true
+            while wait() do
+            if a.Health > 0 then
+            if Player.Character.Humanoid.Health > 0 then
+            Events.Damage:InvokeServer(Tool, a, 15, 1, require(v:FindFirstChild("ACS_Settings")), ModTable, nil, nil, RealID)
+            end
+            else
+            break
+            end
+            end
+            end
+            end
+            if FoundAndDone then
+            FoundAndDone = false
+            break
+            end
+            end
+            end
+            end
+            end
+            Fluent:Notify({
+                Title = "Notification",
+                Content = "성공적으로 실행되었습니다!",
+                Duration = 5 -- Set to nil to make the notification not disappear
+            })
+    end
+})
+
+Tabs.Gunkit:AddButton({
+    Title = "2.0.1 Fall All",
+    Description = "모두를 떨어트립니다.",
+    Callback = function()
+        local cFrame = CFrame.new(0,0,0)
+
+
+        local Size = {
+         X = 2000,
+         Y = 2000,
+         Z = 2000
+        }
+        game:GetService('ReplicatedStorage')['ACS_Engine'].Events.Breach:InvokeServer(3,{Fortified={},Destroyable=workspace},CFrame.new(),CFrame.new(),{CFrame=game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*cFrame,Size=Size})
+        Fluent:Notify({
+            Title = "Notification",
+            Content = "성공적으로 실행되었습니다!",
+            Duration = 5 -- Set to nil to make the notification not disappear
+        })
+    end
+})
+
+local Section = Tabs.Gunkit:AddSection("ACS 1.7.5")
+
+Tabs.Gunkit:AddButton({
+    Title = "1.7.5 Kill All",
+    Description = "모든 플레이어를 죽입니다",
+    Callback = function()
+        game:GetService('ReplicatedStorage')['ACS_Engine'].Eventos.Damage:FireServer(game.Players.LocalPlayer.Character.Humanoid, math.huge, 0, 0)
+        Fluent:Notify({
+            Title = "Notification",
+            Content = "성공적으로 실행되었습니다!",
+            Duration = 5 -- Set to nil to make the notification not disappear
+        })
+    end
+})
+
+Tabs.Gunkit:AddButton({
+    Title = "1.7.5 Heal",
+    Description = "체력을 회복합니다.",
+    Callback = function()
+        game:GetService('ReplicatedStorage')['ACS_Engine'].Eventos.Damage:FireServer(game.Players.LocalPlayer.Character.Humanoid, -50, 0, 0)
+        Fluent:Notify({
+            Title = "Notification",
+            Content = "성공적으로 실행되었습니다!",
+            Duration = 5 -- Set to nil to make the notification not disappear
+        })
+    end
+})
+
+Tabs.Gunkit:AddButton({
+    Title = "1.7.5 God Mod",
+    Description = "체력이 무한이 됩니다.",
+    Callback = function()
+        game:GetService('ReplicatedStorage')['ACS_Engine'].Eventos.Damage:FireServer(game.Players.LocalPlayer.Character.Humanoid, -math.huge, 0, 0)
+        Fluent:Notify({
+            Title = "Notification",
+            Content = "성공적으로 실행되었습니다!",
+            Duration = 5 -- Set to nil to make the notification not disappear
+        })
+    end
+})
+
+Tabs.Gunkit:AddButton({
+    Title = "1.7.5 Server Nuke",
+    Description = "서버를 터트립니다.",
+    Callback = function()
+        while task.wait() do
+
+            for i = 1, 30 do
+                game:GetService('ReplicatedStorage')['ACS_Engine'].Eventos.ServerBullet:FireServer(Vector3.new(0/0/0),Vector3.new(0/0/0))
+            end
+         end
+         Fluent:Notify({
+            Title = "Notification",
+            Content = "성공적으로 실행되었습니다!",
+            Duration = 5 -- Set to nil to make the notification not disappear
+        })
+    end
+})
+
+local Section = Tabs.Gunkit:AddSection("Carbon Engine")
+
+Tabs.Gunkit:AddButton({
+    Title = "Carbon 이벤트 경로 설정",
+    Description = "이벤트의 경로를 설정합니다. ",
+    Callback = function()
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local CResource = ReplicatedStorage:WaitForChild("CarbonResource", 3)
+        local Players = game:GetService("Players")
+        Players.LocalPlayer.Character.Humanoid.Health = 0
+        task.wait(0.3)
+        for idx, remote in pairs(CResource.Events:GetChildren()) do
+            Events[remote.Name] = remote
+        end
+        print(Events["DamageEvent"])
+        CEset = true
+        Fluent:Notify({
+            Title = "Notification",
+            Content = "성공적으로 실행되었습니다!",
+            Duration = 5 -- Set to nil to make the notification not disappear
+        })
+    end
+})
+
+Tabs.Gunkit:AddButton({
+    Title = "Carbon Kill All",
+    Description = "모든 플레이어를 죽입니다",
+    Callback = function()
+        local Players = game:GetService("Players")
+
+        for idx, plr in pairs(Players:GetPlayers()) do
+            if plr ~= Players.LocalPlayer then
+                Events["DamageEvent"]:FireServer(plr.Character:FindFirstChild("Humanoid"), 100000, "Torso", {'nil','Auth','nil','nil'})
+            end
+        end
+        Fluent:Notify({
+            Title = "Notification",
+            Content = "성공적으로 실행되었습니다!",
+            Duration = 5 -- Set to nil to make the notification not disappear
+        })
+    end
+})
+
+Tabs.Gunkit:AddButton({
+    Title = "Carbon Ex All",
+    Description = "모든 플레이어를 터트립니다.",
+    Callback = function()
+        local Players = game:GetService("Players")
+        if CEset then
+            local allPlayers = Players:GetPlayers()
+            for _, p in pairs(allPlayers) do
+                if p ~= game.Players.LocalPlayer and p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
+                    local playerPosition = p.Character.HumanoidRootPart.Position
+                    if Events["ExplosiveEvent"] then
+                        Events["ExplosiveEvent"]:FireServer("Xsi-On-Top", playerPosition, 50000, 10, 10, nil, nil, nil, nil, nil, nil, nil, "Auth")
+                    else
+                        warn("ExplosiveEvent not found in Events folder.")
+                    end
+                end
+            end
+        end
+        Fluent:Notify({
+            Title = "Notification",
+            Content = "성공적으로 실행되었습니다!",
+            Duration = 5 -- Set to nil to make the notification not disappear
+        })
+    end
+})
+
+local Section = Tabs.Gunkit:AddSection("Classic Sword (건킷아님)")
+
+Tabs.Gunkit:AddButton({
+    Title = "Classic Sword Kill all",
+    Description = "Classic Sword가 있는곳에서 사람을 모두 죽입니다.",
+    Callback = function()
+        loadstring("\108\111\99\97\108\32\76\80\32\61\32\103\97\109\101\58\71\101\116\83\101\114\118\105\99\101\40\34\80\108\97\121\101\114\115\34\41\46\76\111\99\97\108\80\108\97\121\101\114\10\119\104\105\108\101\32\119\97\105\116\40\48\46\49\41\32\100\111\10\102\111\114\32\105\44\118\32\105\110\32\112\97\105\114\115\40\103\97\109\101\58\71\101\116\83\101\114\118\105\99\101\40\34\80\108\97\121\101\114\115\34\41\58\71\101\116\80\108\97\121\101\114\115\40\41\41\32\100\111\10\105\102\32\118\32\97\110\100\32\118\46\67\104\97\114\97\99\116\101\114\32\97\110\100\32\118\32\126\61\32\76\80\32\97\110\100\32\118\46\67\104\97\114\97\99\116\101\114\58\70\105\110\100\70\105\114\115\116\67\104\105\108\100\40\34\72\101\97\100\34\41\32\116\104\101\110\10\108\111\99\97\108\32\104\114\112\32\61\32\118\46\67\104\97\114\97\99\116\101\114\58\70\105\110\100\70\105\114\115\116\67\104\105\108\100\40\34\72\101\97\100\34\41\32\10\104\114\112\58\66\114\101\97\107\74\111\105\110\116\115\40\41\10\104\114\112\46\84\114\97\110\115\112\97\114\101\110\99\121\32\61\32\48\10\104\114\112\46\66\114\105\99\107\67\111\108\111\114\32\61\32\118\46\84\101\97\109\67\111\108\111\114\10\104\114\112\46\65\110\99\104\111\114\101\100\32\61\32\116\114\117\101\10\104\114\112\46\67\97\110\67\111\108\108\105\100\101\32\61\32\102\97\108\115\101\10\112\99\97\108\108\40\102\117\110\99\116\105\111\110\40\41\10\104\114\112\46\67\70\114\97\109\101\32\61\32\76\80\46\67\104\97\114\97\99\116\101\114\46\72\117\109\97\110\111\105\100\82\111\111\116\80\97\114\116\46\67\70\114\97\109\101\32\42\32\67\70\114\97\109\101\46\110\101\119\40\49\44\48\44\45\51\46\53\41\10\101\110\100\41\10\101\110\100\10\101\110\100\10\101\110\100\10")()
+        Fluent:Notify({
+            Title = "Notification",
+            Content = "성공적으로 실행되었습니다!",
+            Duration = 5 -- Set to nil to make the notification not disappear
+        })
+    end
+})
+-----------------------------------Others--------------------------
+local Section = Tabs.Others:AddSection("Untel's Game")
+Section:AddParagraph({
+    Title = "운테르게임의 스크립트입니다."
+})
+
+local Toggle = Tabs.Others:AddToggle("AutoEquipPickUp", {Title = "총 자동 줍기", Default = false})
+local autoEquipEnabled = false
+
+Toggle:OnChanged(function(state)
+    autoEquipEnabled = state
+end)
+
+game:GetService("RunService").Stepped:Connect(function()
+    if autoEquipEnabled then
+        local p1 = workspace:FindFirstChild("P1")
+        local character = game:GetService("Players").LocalPlayer.Character
+        local humanoid = character and character:FindFirstChild("Humanoid")
+        local player = game:GetService("Players"):FindFirstChild("FLOWER_777OSP")
+        if p1 and character then
+            if player then
+                task.wait(0.01)
+                if p1.Parent ~= workspace then
+                    return
+                end
+            end
+            if humanoid then
+                humanoid:EquipTool(p1)
+            end
+        end
+    end
+end)
+
+local Toggle = Tabs.Others:AddToggle("AutoEquipBombPickUp", {Title = "폭탄 자동줍기", Default = false})
+local autoEquipEnabled = false
+
+Toggle:OnChanged(function(state)
+    autoEquipEnabled = state
+end)
+
+game:GetService("RunService").Stepped:Connect(function()
+    if autoEquipEnabled then
+        local Bomb = workspace:FindFirstChild("Bomb")
+        local character = game:GetService("Players").LocalPlayer.Character
+        local humanoid = character and character:FindFirstChild("Humanoid")
+        local player = game:GetService("Players"):FindFirstChild("FLOWER_777OSP")
+        if Bomb and character then
+            if player then
+                task.wait(0.01)
+                if Bomb.Parent ~= workspace then
+                    return
+                end
+            end
+            if humanoid then
+                humanoid:EquipTool(Bomb)
+            end
+        end
+    end
+end)
+
+local Section = Tabs.Others:AddSection("Fisch")
+Section:AddParagraph({
+    Title = "Fisch의 스크립트입니다."
+})
+
+Tabs.Others:AddButton({
+    Title = "Nomal Hub",
+    Description = "Nomal Hub를 실행합니다.",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Flower-Devloper/fish_script/refs/heads/main/fishScript.lua"))()
+        Fluent:Notify({
+			Title = "Notification",
+			Content = "성공적으로 실행되었습니다.",
+			Duration = 5
+		})
+    end
+})
+
+local Section = Tabs.Others:AddSection("검열없는 게임")
+Section:AddParagraph({
+    Title = "검열없는 게임의 스크립트입니다."
+})
+
+Tabs.Others:AddButton({
+    Title = "표지판 조종",
+    Description = "표지판을 조종하는 스크립트를 실행합니다.",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Flower-Devloper/robloxscript2/refs/heads/main/%ED%91%9C%EC%A7%80%ED%8C%90.lua"))()
+        Fluent:Notify({
+			Title = "Notification",
+			Content = "성공적으로 실행되었습니다.",
+			Duration = 5
+		})
+    end
+})
+
+local Section = Tabs.Others:AddSection("프리즌 라이프")
+Section:AddParagraph({
+    Title = "프리즌 라이프의 스크립트입니다."
+})
+
+Tabs.Others:AddButton({
+    Title = "AK47 얻기",
+    Description = "AK47 을 얻습니다.",
+    Callback = function()
+        local character = Player.Character or Player.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+        local targetPosition = Vector3.new(-936, 93, 2056)
+        local originalPosition = humanoidRootPart.Position
+        local function teleportToPosition(position)
+            humanoidRootPart.CFrame = CFrame.new(position)
+        end
+        local function hasAK47()
+            for _, item in pairs(Player.Backpack:GetChildren()) do
+                if item.Name == "AK-47" then
+                    return true
+                end
+            end
+            return false
+        end
+        local function performAction()
+            local ak47Item = workspace.Prison_ITEMS.giver:FindFirstChild("AK-47")
+            if ak47Item and ak47Item:IsA("Model") and ak47Item:FindFirstChild("ITEMPICKUP") then
+                local args = { ak47Item.ITEMPICKUP }
+                workspace.Remote.ItemHandler:InvokeServer(unpack(args))
+            else
+                warn("AK-47 item not found or ITEMPICKUP not available.")
+            end
+        end
+        local function returnToOriginalPosition()
+            humanoidRootPart.CFrame = CFrame.new(originalPosition)
+        end
+        local function teleportAndPerformAction()
+            teleportToPosition(targetPosition)
+            wait(0.1)
+            while not hasAK47() do
+                performAction()
+                wait(0.1)
+            end
+            returnToOriginalPosition()
+        end
+        teleportAndPerformAction()
+        Fluent:Notify({
+			Title = "Notification",
+			Content = "성공적으로 실행되었습니다.",
+			Duration = 5
+		})
+    end
+})
+
+Tabs.Others:AddButton({
+    Title = "Kill Aura",
+    Description = "주변 사람들을 죽입니다.",
+    Callback = function()
+        Fluent:Notify({
+            Title = "Notification",
+            Content = "성공적으로 실행되었습니다.",
+            SubContent = "K를 눌러 토글",
+            Duration = 5
+        })
+        loadstring(game:HttpGet("https://pastebin.com/raw/GrFbCXis"))()
+    end
+})
+-----------------------Settings----------------
+
+local Section = Tabs.Settings:AddSection("Discord")
+
+Tabs.Settings:AddButton({
+    Title = "Discord Server",
+    Description = "디스코드 서버 링크를 복사합니다.",
+    Callback = function()
+        local textToCopy = "https://discord.gg/FvnPPmbFyR"
+        if setclipboard then
+            setclipboard(textToCopy)
+            Fluent:Notify({
+                Title = "Notification",
+                Content = "텍스트가 성공적으로 복사되었습니다!",
+                Duration = 5
+            })
+        else
+            Fluent:Notify({
+                Title = "Error",
+                Content = "클립보드 복사를 지원하지 않는 환경입니다.",
+                Duration = 5
+            })
+        end
+    end
+})
+
+-- Addons:
+-- SaveManager (Allows you to have a configuration system)
+-- InterfaceManager (Allows you to have a interface managment system)
+
+-- Hand the library over to our managers
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+
+-- Ignore keys that are used by ThemeManager.
+-- (we dont want configs to save themes, do we?)
+SaveManager:IgnoreThemeSettings()
+
+-- You can add indexes of elements the save manager should ignore
+SaveManager:SetIgnoreIndexes({})
+
+-- use case for doing it this way:
+-- a script hub could have themes in a global folder
+-- and game configs in a separate folder per game
+InterfaceManager:SetFolder("FluentScriptHub")
+SaveManager:SetFolder("FluentScriptHub/specific-game")
+
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+
+
+Window:SelectTab(1)
+
+Fluent:Notify({
+    Title = "Notification",
+    Content = "스크립트가 성공적으로 로드되었습니다.",
+    Duration = 8
+})
+
+-- You can use the SaveManager:LoadAutoloadConfig() to load a config
+-- which has been marked to be one that auto loads!
+SaveManager:LoadAutoloadConfig()
