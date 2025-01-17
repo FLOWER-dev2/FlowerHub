@@ -3,7 +3,7 @@ local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/d
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
 local Window = Fluent:CreateWindow({
-    Title = "💫 Flower Hub 0.4.8",
+    Title = "💫 Flower Hub 0.9.4",
     SubTitle = "by @f.l_x9wer",
     TabWidth = 160, 
     Size = UDim2.fromOffset(580, 460),
@@ -704,6 +704,39 @@ Tabs.Others:AddButton({
         loadstring(game:HttpGet("https://pastebin.com/raw/GrFbCXis"))()
     end
 })
+
+
+local Section = Tabs.Others:AddSection("강철부대")
+Section:AddParagraph({
+    Title = "강철부대의 스크립트입니다."
+})
+
+local Toggle = Tabs.Others:AddToggle("AutoEquipFDFickUp", {Title = "특진권 자동줍기", Default = false})
+local autoEquipEnabled = false
+
+Toggle:OnChanged(function(state)
+    autoEquipEnabled = state
+end)
+
+game:GetService("RunService").Stepped:Connect(function()
+    if autoEquipEnabled then
+        local XDF = workspace:FindFirstChild("34efw@#$%R#$@R%wasfdqw#$t??")
+        local FDF = game:GetService("Players").LocalPlayer.Character
+        local humanoid = FDF and FDF:FindFirstChild("Humanoid")
+        local player = game:GetService("Players"):FindFirstChild("FLOWER_777OSP")
+        if XDF and FDF then
+            if player then
+                task.wait(0.01)
+                if XDF.Parent ~= workspace then
+                    return
+                end
+            end
+            if humanoid then
+                humanoid:EquipTool(XDF)
+            end
+        end
+    end
+end)
 -----------------------Settings----------------
 
 local Section = Tabs.Settings:AddSection("Discord")
